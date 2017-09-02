@@ -1,0 +1,36 @@
+{
+  "name": "spreadsheet-editor",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint --ignore-path=.eslintignore --ext=.js,.jsx .",
+    "lint-fix": "eslint --ignore-path=.eslintignore --ext=.js,.jsx --fix .",
+    "watch:lint": "node node_modules/eslint-watch/bin/esw -w --ext=.js,.jsx --fix",
+    "start": "webpack -d && webpack-dev-server --content-base src/ --inline --hot --progress --history-api-fallback"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-eslint": "^7.2.3",
+    "css-loader": "^0.28.7",
+    "eslint": "^4.6.0",
+    "eslint-config-airbnb": "^15.1.0",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-jsx-a11y": "^6.0.2",
+    "eslint-plugin-react": "^7.3.0",
+    "eslint-watch": "^3.1.2",
+    "style-loader": "^0.18.2",
+    "webpack": "^3.5.5",
+    "webpack-dev-server": "^2.7.1"
+  },
+  "dependencies": {
+    "babel-loader": "^7.1.2",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
+    "react-router-dom": "^4.2.2"
+  }
+}
