@@ -4,11 +4,18 @@ const webpack = require('webpack');
 var BUILD_DIR = path.resolve(__dirname, 'dist');
 var APP_DIR = path.resolve(__dirname, './src')
 
+const HOST = process.env.HOST || "127.0.0.1";
+const PORT = process.env.PORT || "8888";
+
 module.exports = {
     entry: [
-        APP_DIR + '/js/app.jsx'
+        // `webpack-dev-server/client?http://${HOST}:${PORT}`,
+        // `webpack/hot/only-dev-server`,
+        APP_DIR + '/components/app.jsx'
     ],
     output: {
+        // path: BUILD_DIR,
+        // filename: 'bundle.js',
         filename: './dist/js/bundle.js'
     },
     resolve: {
@@ -22,7 +29,7 @@ module.exports = {
             loader: 'babel-loader',
             exclude: /node_modules/,
             query: {
-                presets: ["react", "es2015", "stage-2"]
+                "presets": ["react", "es2015", "stage-2"]
             }
         }, {
             test: /\.css$/,
