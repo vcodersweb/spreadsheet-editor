@@ -24,8 +24,12 @@ export class FileUpload extends React.Component {
             isCheckedYAxis:true,
             typeOfChart:'line',
             axisDataX:[],
-            tableData: []
+            tableData: [],
+            tableHeaders: [],
+            size: 3
         };
+
+        this.generateHeaders = this.generateHeaders.bind(this);
     }
 
     onDrop = (acceptedFiles, rejectedFiles) => {
@@ -53,7 +57,7 @@ export class FileUpload extends React.Component {
                     if(!json) json = [];
 
                     headerArr = json[0]
-                    this.setState({ tableData: json});
+                    this.setState({ tableData: json, tableHeaders: headerArr});
                     json.forEach(function(record,rowIndex) {
                         if(rowIndex>1){
                             var obj = {};
@@ -134,26 +138,68 @@ export class FileUpload extends React.Component {
         }
     } //onDrop emd here    
 
+    generateHeaders = function() {
+        var cols = this.state.tableHeaders;
+
+        // generate our header (th) cell components
+        return cols.forEach(function(headerName, index) {
+            console.log(headerName);
+            return <th>{headerName}</th>;
+        });
+    };
+
+    generateRows = function() {
+        var cols = this.props.cols,  // [{key, label}]
+            data = this.props.data;
+
+        return data.map(function(item) {
+            // handle the column data within each row
+            var cells = cols.map(function(colData) {
+
+                // colData.key might be "firstName"
+                return <td> {item[colData.key]} </td>;
+            });
+            return <tr key={item.id}> {cells} </tr>;
+        });
+    }
     render() {
         let dropzoneRef;
         
         return (
             <div>
-                <h1>Application creation wizard</h1>
-                <Dropzone ref={(node) => { dropzoneRef = node; }}  onDrop={(files) => this.onDrop(files)} style={{width:'100%', height:'50px', borderWidth: '2px', borderColor: 'rgb(102, 102, 102)', borderStyle: 'dashed', borderRadius: '5px'}}>
-                    <div style={{padding:'12px'}}>Try dropping some files here, or click to select files to upload.</div>
-                </Dropzone>
-                <div className="col-sm-3">
-                    <button className="btn btn-success" type="button"  onClick={() => { dropzoneRef.open() }}>Browse file</button>&nbsp;
+                <div className="well mb-4 col-sm-12">
+                    <div className="input-group-sm col-md-4">
+                        <label htmlFor="ApplicationName">Application name:</label>
+                        <input type="text" id="ApplicationName" className="form-control-sm" />
+                    </div>
+                    <div className="input-group-sm col-md-4">
+                        <label htmlFor="DataContent">Data content:</label>
+                        <select id="DataContent" className="form-control-sm">
+                            <option value="T">Transaction data</option>
+                            <option value="M">Master data</option>
+                        </select>
+                    </div>
+                {/* </div>
+                <div className="row mb-4 col-sm-12"> */}
+                    <div className="input-group-sm">
+                        <label htmlFor="UserGroup">Authorize User Group:</label>
+                        <input type="text" id="UserGroup" className="form-control-sm" />
+                    </div>
                 </div>
-                {/* <BootstrapTable data={ this.state.tableData } >
-                </BootstrapTable> */}
-                <BootstrapTable data={this.state.excelData} >
-                    <TableHeaderColumn width='70' dataField='S.No' isKey={true}>State</TableHeaderColumn>
-                    <TableHeaderColumn width='70' dataField='Name'>StateCode</TableHeaderColumn>
-                    <TableHeaderColumn width='180' dataField='TFS Path'>Region</TableHeaderColumn>
-                    <TableHeaderColumn width='80' dataField='Bitbucket URL'>Year</TableHeaderColumn>
-                    <TableHeaderColumn width='70' dataField='Status'>Quarter</TableHeaderColumn>
+                <div className="row mb-3">
+                    <div className="col-sm-2">
+                        {/* <button className="btn btn-success" type="button"  onClick={() => { dropzoneRef.open() }}>Browse file</button>&nbsp; */}
+                        <a href="#" onClick={() => { dropzoneRef.open() }}>Browse file</a>&nbsp;
+                    </div>
+                    <div className="col-sm-10">
+                        <Dropzone ref={(node) => { dropzoneRef = node; }}  onDrop={(files) => this.onDrop(files)} style={{width:'100%', height:'50px', borderWidth: '2px', borderColor: 'rgb(102, 102, 102)', borderStyle: 'dashed', borderRadius: '5px'}}>
+                            <div style={{padding:'12px'}}>Try dropping some files here, or click to select files to upload.</div>
+                        </Dropzone>
+                    </div>
+                </div>
+                <span>Data preview</span>
+                <BootstrapTable data={this.state.excelData} keyField='S.No'>
+                    { this.state.tableHeaders.map((name, index) => <TableHeaderColumn key={index} dataField={name}>{name}</TableHeaderColumn>) }
                 </BootstrapTable>
             </div>
         );
