@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Link, IndexRoute, Match } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Redirect, NavLink, IndexRoute, Match } from 'react-router-dom';
 
 import styles from '../../styles/bootstrap-nav-wizard.css';
 import { FileUpload } from './fileUpload/FileUpload';
@@ -9,35 +9,26 @@ export class AppCreation extends React.Component {
     render() {
         return (
             <div className="mt-2">
-                {/* <ul className="nav navbar-nav list-inline"> */}
                 <h1>Application creation wizard</h1>
                 <ul className="nav nav-wizard">
-                    <li className="active">
-                        <Link to="/createApp/upload">Upload</Link>
+                    <li className="">
+                        <NavLink activeClassName='active' to="/createApp/upload">Upload</NavLink>
                     </li>
                     <li className="">
-                        <Link to="/createApp/tableDesign">Define</Link>
+                        <NavLink activeClassName='active' to="/createApp/tableDesign">Define</NavLink>
                     </li>
                     <li className="">
-                        <Link to="/createApp/upload">Preview</Link>
+                        <NavLink activeClassName='active' to="/createApp/preview">Preview</NavLink>
                     </li>
                     <li className="">
-                        <Link to="/createApp/tableDesign">Finish</Link>
+                        <NavLink activeClassName='active' to="/createApp/finish">Finish</NavLink>
                     </li>
                 </ul>
-                {/* <FileUpload /> */}
-                {/* <Route path="/createApp/" component={FileUpload} /> */}
-                {/* <Route path="/createApp/define" component={FileUpload} /> */}
-                {/* <Route path="/createApp/tableDesign" component={TableDesign} /> */}
-                {/* <Route path="/createApp">
-                    <IndexRoute component={AppCreation} /> */}
-                    <Route path="/createApp/upload" component={FileUpload} />
-                    <Route path="/createApp/tableDesign" component={TableDesign} />
-                {/* </Route> */}
+                <Route path="/createApp/upload" component={FileUpload} />
+                <Route path="/createApp/tableDesign" component={TableDesign} />
                 <Route exact path="/createApp" render={() => (
-                    <FileUpload />
+                     <Redirect to="/createApp/upload"/>
                 )}/>
-                {/* <Match exact pattern="/createApp" component={FileUpload} /> */}
             </div>
         )
     }

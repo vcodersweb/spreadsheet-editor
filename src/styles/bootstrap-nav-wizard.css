@@ -1,6 +1,11 @@
+.nav-wizard {
+  padding-bottom: 10px;
+}
+
 .nav-wizard > li {
   float: left;
   width: 20%;
+  text-align: center;
 }
 .nav-wizard > li > a {
   position: relative;
@@ -69,7 +74,7 @@
 .nav-wizard > li.done > a:after {
   border-left-color: #e2e2e2;
 }
-.nav-wizard > li.active > a,
+/* .nav-wizard > li.active > a,
 .nav-wizard > li.active > a:hover,
 .nav-wizard > li.active > a:focus {
   color: #ffffff;
@@ -79,6 +84,19 @@
   border-left-color: #428bca;
 }
 .nav-wizard > li.active > a .badge {
+  color: #428bca;
+  background-color: #ffffff;
+} */
+.nav-wizard > li > a.active,
+.nav-wizard > li > a.active:hover,
+.nav-wizard > li > a.active:focus {
+  color: #ffffff;
+  background-color: #428bca;
+}
+.nav-wizard > li > a.active:after {
+  border-left-color: #428bca;
+}
+.nav-wizard > li > a.active .badge {
   color: #428bca;
   background-color: #ffffff;
 }
